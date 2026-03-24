@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom"
 import "./NavBar.css"
 import Logo from "./rare.jpeg"
 
-export const NavBar = ({ token, setToken }) => {
+export const NavBar = ({ token, setToken, isAdmin }) => {
   const navigate = useNavigate()
   const navbar = useRef()
   const hamburger = useRef()
@@ -39,6 +39,7 @@ export const NavBar = ({ token, setToken }) => {
                 <Link to="/myposts" className="navbar-item">My Posts</Link>
                 <Link to="/tags" className="navbar-item">Tag Management</Link>
                 <Link to="/categories" className="navbar-item">Category Management</Link>
+                {isAdmin && <Link to="/profiles" className="navbar-item">User Profiles</Link>}
               </>
               :
               ""

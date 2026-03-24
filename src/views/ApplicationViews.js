@@ -16,6 +16,7 @@ import { CategoryEdit } from "../components/categories/CategoryEdit"
 import { CategoryCreate } from "../components/categories/CategoryCreate"
 import { CommentEdit } from "../components/comments/CommentEdit"
 import { CommentCreate } from "../components/comments/CommentCreate"
+import { UserProfileList } from "../components/users/UserProfileList"
 
 export const ApplicationViews = ({ token, setToken }) => {
   return <>
@@ -37,6 +38,7 @@ export const ApplicationViews = ({ token, setToken }) => {
         <Route path="/categories/:categoryId/edit" element={<CategoryEdit />} />
         <Route path="/posts/:postId/comments/new" element={<CommentCreate />} />
         <Route path="/comments/:commentId/edit" element={<CommentEdit />} />
+        <Route path="/profiles" element={<UserProfileList />} />
       </Route>
     </Routes>
   </>
