@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { getPost, deletePost } from "../../managers/PostManager"
+import { getPostComments } from "../../managers/CommentManager"
 
 export const PostDetail = () => {
   const { postId } = useParams()
   const [post, setPost] = useState(null)
+  const [comments, setComments] = useState([])
   const [confirmDelete, setConfirmDelete] = useState(false)
   const navigate = useNavigate()
 
@@ -12,6 +14,7 @@ export const PostDetail = () => {
 
   useEffect(() => {
     getPost(postId).then(setPost)
+    getPostComments(postId).then(setComments)
   }, [postId])
 
   if (!post) return <p className="p-4">Loading...</p>
@@ -88,6 +91,34 @@ export const PostDetail = () => {
             )}
           </div>
         )}
+        <hr />
+        <div className="is-flex is-justify-content-space-between is-align-items-center mb-3">
+          <h2 className="title is-5 mb-0">Comments</h2>
+          <button
+            className="button is-primary is-small"
+            onClick={() => navigate(`/posts/${postId}/comments/new`)}
+          >
+            Add Comment
+          </button>
+        </div>
+        {comments.length === 0
+          ? <p className="has-text-grey">No comments yet.</p>
+          : comments.map(comment => (
+              <div key={comment.id} className="box">
+                <p className="has-text-weight-bold">{comment.subject}</p>
+                <p>{comment.content}</p>
+                <p className="has-text-grey is-size-7">by {comment.author.username}</p>
+                {comment.author.id === currentUserId && (
+                  <button
+                    className="button is-small is-info mt-2"
+                    onClick={() => navigate(`/comments/${comment.id}/edit`)}
+                  >
+                    Edit
+                  </button>
+                )}
+              </div>
+            ))
+        }
       </div>
     </section>
   )
