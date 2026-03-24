@@ -50,6 +50,12 @@ export const UserProfileDetail = () => {
               <th>User Type</th>
               <td>{profile.user_type}</td>
             </tr>
+            {String(userId) === String(currentUserId) && (
+              <tr>
+                <th>Subscribers</th>
+                <td>{profile.subscriber_count}</td>
+              </tr>
+            )}
           </tbody>
         </table>
         <div className="mt-4 is-flex is-gap-3">
