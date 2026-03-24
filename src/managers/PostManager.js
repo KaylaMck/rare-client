@@ -45,6 +45,13 @@ export const updatePost = (postId, post) => {
   }).then(res => res.json())
 }
 
+export const deletePost = (postId) => {
+  return fetch(`${API}/posts/${postId}`, {
+    method: "DELETE",
+    headers: authHeader()
+  })
+}
+
 export const updatePostTags = (postId, tagIds) => {
   return fetch(`${API}/posts/${postId}/tags`, {
     method: "PUT",

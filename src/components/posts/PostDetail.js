@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
-import { getPost } from "../../managers/PostManager"
+import { getPost, deletePost } from "../../managers/PostManager"
 
 export const PostDetail = () => {
   const { postId } = useParams()
   const [post, setPost] = useState(null)
+  const [confirmDelete, setConfirmDelete] = useState(false)
   const navigate = useNavigate()
 
   const currentUserId = parseInt(localStorage.getItem("auth_token"))
@@ -62,6 +63,29 @@ export const PostDetail = () => {
             >
               Manage Tags
             </button>
+            {confirmDelete ? (
+              <>
+                <button
+                  className="button is-danger"
+                  onClick={() => deletePost(postId).then(() => navigate("/posts"))}
+                >
+                  Confirm Delete
+                </button>
+                <button
+                  className="button"
+                  onClick={() => { setConfirmDelete(false); navigate(`/posts/${postId}`) }}
+                >
+                  Cancel
+                </button>
+              </>
+            ) : (
+              <button
+                className="button is-danger is-light"
+                onClick={() => setConfirmDelete(true)}
+              >
+                Delete Post
+              </button>
+            )}
           </div>
         )}
       </div>
