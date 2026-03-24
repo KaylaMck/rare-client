@@ -38,3 +38,10 @@ export const updateComment = (commentId, comment) => {
     body: JSON.stringify(comment)
   }).then(res => res.json())
 }
+
+export const deleteComment = (commentId) => {
+  return fetch(`${API}/comments/${commentId}`, {
+    method: "DELETE",
+    headers: authHeader()
+  })
+}

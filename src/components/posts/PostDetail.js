@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { getPost, deletePost } from "../../managers/PostManager"
-import { getPostComments } from "../../managers/CommentManager"
+import { getPostComments, deleteComment } from "../../managers/CommentManager"
 
 export const PostDetail = () => {
   const { postId } = useParams()
   const [post, setPost] = useState(null)
   const [comments, setComments] = useState([])
   const [confirmDelete, setConfirmDelete] = useState(false)
+  const [confirmDeleteCommentId, setConfirmDeleteCommentId] = useState(null)
   const navigate = useNavigate()
 
   const currentUserId = parseInt(localStorage.getItem("auth_token"))
@@ -109,12 +110,42 @@ export const PostDetail = () => {
                 <p>{comment.content}</p>
                 <p className="has-text-grey is-size-7">by {comment.author.username}</p>
                 {comment.author.id === currentUserId && (
-                  <button
-                    className="button is-small is-info mt-2"
-                    onClick={() => navigate(`/comments/${comment.id}/edit`)}
-                  >
-                    Edit
-                  </button>
+                  <div className="buttons mt-2">
+                    <button
+                      className="button is-small is-info"
+                      onClick={() => navigate(`/comments/${comment.id}/edit`)}
+                    >
+                      Edit
+                    </button>
+                    {confirmDeleteCommentId === comment.id ? (
+                      <>
+                        <button
+                          className="button is-small is-danger"
+                          onClick={() =>
+                            deleteComment(comment.id).then(() => {
+                              setConfirmDeleteCommentId(null)
+                              getPostComments(postId).then(setComments)
+                            })
+                          }
+                        >
+                          Confirm Delete
+                        </button>
+                        <button
+                          className="button is-small"
+                          onClick={() => setConfirmDeleteCommentId(null)}
+                        >
+                          Cancel
+                        </button>
+                      </>
+                    ) : (
+                      <button
+                        className="button is-small is-danger is-light"
+                        onClick={() => setConfirmDeleteCommentId(comment.id)}
+                      >
+                        Delete
+                      </button>
+                    )}
+                  </div>
                 )}
               </div>
             ))
