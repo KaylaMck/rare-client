@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { getCategories } from "../../managers/CategoryManager"
+import { getCategories, deleteCategory } from "../../managers/CategoryManager"
 
 export const CategoryList = () => {
   const [categories, setCategories] = useState([])
@@ -9,6 +9,15 @@ export const CategoryList = () => {
   useEffect(() => {
     getCategories().then(setCategories)
   }, [])
+
+  const handleDelete = (category) => {
+    if (window.confirm(`Are you sure you want to delete "${category.label}"?`)) {
+      deleteCategory(category.id).then(() => {
+        navigate("/categories")
+        getCategories().then(setCategories)
+      })
+    }
+  }
 
   return (
     <section className="section">
@@ -28,6 +37,12 @@ export const CategoryList = () => {
               onClick={() => navigate(`/categories/${category.id}/edit`)}
             >
               Edit
+            </button>
+            <button
+              className="button is-small is-danger ml-2"
+              onClick={() => handleDelete(category)}
+            >
+              Delete
             </button>
           </li>
         ))}

@@ -32,3 +32,10 @@ export const updateCategory = (id, category) => {
     body: JSON.stringify(category)
   }).then(res => res.json())
 }
+
+export const deleteCategory = (id) => {
+  return fetch(`${API}/categories/${id}`, {
+    method: "DELETE",
+    headers: authHeader()
+  })
+}
