@@ -28,6 +28,12 @@ export const createPost = (post) => {
   }).then(res => res.json())
 }
 
+export const getSubscribedPosts = () => {
+  return fetch(`${API}/subscribedposts`, {
+    headers: authHeader()
+  }).then(res => res.json())
+}
+
 export const getMyPosts = () => {
   return fetch(`${API}/myposts`, {
     headers: authHeader()

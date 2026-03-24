@@ -19,6 +19,7 @@ import { CommentCreate } from "../components/comments/CommentCreate"
 import { UserProfileList } from "../components/users/UserProfileList"
 import { UserProfileDetail } from "../components/users/UserProfileDetail"
 import { UserPostList } from "../components/users/UserPostList"
+import { Home } from "../components/home/Home"
 
 export const ApplicationViews = ({ token, setToken }) => {
   return <>
@@ -26,6 +27,7 @@ export const ApplicationViews = ({ token, setToken }) => {
       <Route path="/login" element={<Login setToken={setToken} />}  />
       <Route path="/register" element={<Register setToken={setToken} />}  />
       <Route element={<Authorized token={token} />}>
+        <Route path="/" element={<Home />} />
         <Route path="/posts" element={<PostList />} />
         <Route path="/posts/new" element={<PostCreate />} />
         <Route path="/tags" element={<TagList />} />
