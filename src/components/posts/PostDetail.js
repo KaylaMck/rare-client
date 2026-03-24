@@ -24,7 +24,9 @@ export const PostDetail = () => {
         <p className="subtitle">
           By {post.user.username}
           {post.category && <> &middot; {post.category.label}</>}
-          {post.publication_date && <> &middot; {post.publication_date}</>}
+          {post.publication_date && (
+            <> &middot; {new Date(post.publication_date.replace(/-/g, '/')).toLocaleDateString("en-US", { month: '2-digit', day: '2-digit', year: 'numeric' })}</>
+          )}
         </p>
 
         {post.image_url && (
