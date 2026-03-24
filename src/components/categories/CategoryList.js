@@ -13,6 +13,12 @@ export const CategoryList = () => {
   return (
     <section className="section">
       <h1 className="title">Category Management</h1>
+      <button
+        className="button is-primary mb-4"
+        onClick={() => navigate("/categories/new")}
+      >
+        Create Category
+      </button>
       <ul>
         {categories.map(category => (
           <li key={category.id}>
