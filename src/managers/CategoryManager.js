@@ -10,3 +10,17 @@ export const getCategories = () => {
     headers: authHeader()
   }).then(res => res.json())
 }
+
+export const getCategory = (id) => {
+  return fetch(`${API}/categories/${id}`, {
+    headers: authHeader()
+  }).then(res => res.json())
+}
+
+export const updateCategory = (id, category) => {
+  return fetch(`${API}/categories/${id}`, {
+    method: "PUT",
+    headers: { ...authHeader(), "Content-Type": "application/json" },
+    body: JSON.stringify(category)
+  }).then(res => res.json())
+}
