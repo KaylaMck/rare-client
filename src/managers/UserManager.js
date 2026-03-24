@@ -6,3 +6,12 @@ export const getProfiles = () => {
     }
   }).then(res => res.json())
 }
+
+export const getProfile = (id) => {
+  return fetch(`http://localhost:8088/profiles/${id}`, {
+    headers: {
+      "Authorization": `Token ${localStorage.getItem('auth_token')}`,
+      "Accept": "application/json"
+    }
+  }).then(res => res.json())
+}
