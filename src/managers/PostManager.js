@@ -28,6 +28,12 @@ export const createPost = (post) => {
   }).then(res => res.json())
 }
 
+export const getMyPosts = () => {
+  return fetch(`${API}/myposts`, {
+    headers: authHeader()
+  }).then(res => res.json())
+}
+
 export const updatePostTags = (postId, tagIds) => {
   return fetch(`${API}/posts/${postId}/tags`, {
     method: "PUT",

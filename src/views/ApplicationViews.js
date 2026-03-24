@@ -8,6 +8,7 @@ import { PostDetail } from "../components/posts/PostDetail"
 import { ManagePostTags } from "../components/posts/ManagePostTags"
 import { PostList } from "../components/posts/PostList"
 import { PostCreate } from "../components/posts/PostCreate"
+import { MyPostList } from "../components/posts/MyPostList"
 
 export const ApplicationViews = ({ token, setToken }) => {
   return <>
@@ -21,6 +22,7 @@ export const ApplicationViews = ({ token, setToken }) => {
         <Route path="/tags/new" element={<TagCreate />} />
         <Route path="/posts/:postId" element={<PostDetail />} />
         <Route path="/posts/:postId/tags" element={<ManagePostTags />} />
+        <Route path="/myposts" element={<MyPostList />} />
       </Route>
     </Routes>
   </>
