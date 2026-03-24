@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import { getProfile } from "../../managers/UserManager"
+import { subscribeToUser } from "../../managers/SubscriptionManager"
 
 const DEFAULT_AVATAR = "https://bulma.io/assets/images/placeholders/128x128.png"
 
 export const UserProfileDetail = () => {
   const { userId } = useParams()
   const [profile, setProfile] = useState(null)
+  const currentUserId = localStorage.getItem("auth_token")
 
   useEffect(() => {
     getProfile(userId).then(data => setProfile(data))
@@ -50,10 +52,18 @@ export const UserProfileDetail = () => {
             </tr>
           </tbody>
         </table>
-        <div className="mt-4">
+        <div className="mt-4 is-flex is-gap-3">
           <Link to={`/profiles/${userId}/posts`} className="button is-link">
             View Posts
           </Link>
+          {String(userId) !== String(currentUserId) && (
+            <button
+              className="button is-success ml-2"
+              onClick={() => subscribeToUser(userId)}
+            >
+              Subscribe
+            </button>
+          )}
         </div>
       </div>
     </div>
