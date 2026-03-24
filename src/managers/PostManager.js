@@ -34,6 +34,17 @@ export const getMyPosts = () => {
   }).then(res => res.json())
 }
 
+export const updatePost = (postId, post) => {
+  return fetch(`${API}/posts/${postId}`, {
+    method: "PUT",
+    headers: {
+      ...authHeader(),
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(post)
+  }).then(res => res.json())
+}
+
 export const updatePostTags = (postId, tagIds) => {
   return fetch(`${API}/posts/${postId}/tags`, {
     method: "PUT",

@@ -49,12 +49,20 @@ export const PostDetail = () => {
         </div>
 
         {isAuthor && (
-          <button
-            className="button is-warning"
-            onClick={() => navigate(`/posts/${postId}/tags`)}
-          >
-            Manage Tags
-          </button>
+          <div className="buttons">
+            <button
+              className="button is-info"
+              onClick={() => navigate(`/posts/${postId}/edit`)}
+            >
+              Edit Post
+            </button>
+            <button
+              className="button is-warning"
+              onClick={() => navigate(`/posts/${postId}/tags`)}
+            >
+              Manage Tags
+            </button>
+          </div>
         )}
       </div>
     </section>
