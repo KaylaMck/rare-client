@@ -17,6 +17,17 @@ export const getPost = (postId) => {
   }).then(res => res.json())
 }
 
+export const createPost = (post) => {
+  return fetch(`${API}/posts`, {
+    method: "POST",
+    headers: {
+      ...authHeader(),
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(post)
+  }).then(res => res.json())
+}
+
 export const updatePostTags = (postId, tagIds) => {
   return fetch(`${API}/posts/${postId}/tags`, {
     method: "PUT",
