@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import { getProfile } from "../../managers/UserManager"
-import { subscribeToUser } from "../../managers/SubscriptionManager"
+import { subscribeToUser, unsubscribeFromUser } from "../../managers/SubscriptionManager"
 
 const DEFAULT_AVATAR = "https://bulma.io/assets/images/placeholders/128x128.png"
 
@@ -57,12 +57,21 @@ export const UserProfileDetail = () => {
             View Posts
           </Link>
           {String(userId) !== String(currentUserId) && (
-            <button
-              className="button is-success ml-2"
-              onClick={() => subscribeToUser(userId)}
-            >
-              Subscribe
-            </button>
+            profile.is_subscribed ? (
+              <button
+                className="button is-warning ml-2"
+                onClick={() => unsubscribeFromUser(userId).then(() => setProfile({ ...profile, is_subscribed: false }))}
+              >
+                Unsubscribe
+              </button>
+            ) : (
+              <button
+                className="button is-success ml-2"
+                onClick={() => subscribeToUser(userId).then(() => setProfile({ ...profile, is_subscribed: true }))}
+              >
+                Subscribe
+              </button>
+            )
           )}
         </div>
       </div>
