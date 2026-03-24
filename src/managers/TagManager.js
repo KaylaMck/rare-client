@@ -39,3 +39,12 @@ export const updateTag = (id, label) => {
     body: JSON.stringify({ label })
   }).then(res => res.json())
 }
+
+export const deleteTag = (id) => {
+  return fetch(`http://localhost:8088/tags/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Authorization": `Token ${localStorage.getItem("auth_token")}`
+    }
+  })
+}

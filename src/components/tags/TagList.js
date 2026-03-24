@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { getTags } from "../../managers/TagManager"
+import { getTags, deleteTag } from "../../managers/TagManager"
 
 export const TagList = () => {
   const [tags, setTags] = useState([])
@@ -9,6 +9,12 @@ export const TagList = () => {
   useEffect(() => {
     getTags().then(setTags)
   }, [])
+
+  const handleDelete = (tag) => {
+    if (window.confirm(`Are you sure you want to delete the tag "${tag.label}"?`)) {
+      deleteTag(tag.id).then(() => getTags().then(setTags))
+    }
+  }
 
   return (
     <section className="section">
@@ -25,6 +31,12 @@ export const TagList = () => {
               onClick={() => navigate(`/tags/${tag.id}/edit`)}
             >
               Edit
+            </button>
+            <button
+              className="button is-small is-danger ml-2"
+              onClick={() => handleDelete(tag)}
+            >
+              Delete
             </button>
           </li>
         ))}
