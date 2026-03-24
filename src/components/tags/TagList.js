@@ -18,7 +18,15 @@ export const TagList = () => {
       </button>
       <ul>
         {tags.map(tag => (
-          <li key={tag.id}>{tag.label}</li>
+          <li key={tag.id}>
+            {tag.label}
+            <button
+              className="button is-small is-warning ml-3"
+              onClick={() => navigate(`/tags/${tag.id}/edit`)}
+            >
+              Edit
+            </button>
+          </li>
         ))}
       </ul>
     </section>
