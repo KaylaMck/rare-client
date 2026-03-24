@@ -52,6 +52,12 @@ export const deletePost = (postId) => {
   })
 }
 
+export const getPostsByUser = (userId) => {
+  return fetch(`${API}/profiles/${userId}/posts`, {
+    headers: authHeader()
+  }).then(res => res.json())
+}
+
 export const updatePostTags = (postId, tagIds) => {
   return fetch(`${API}/posts/${postId}/tags`, {
     method: "PUT",

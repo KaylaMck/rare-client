@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { getProfile } from "../../managers/UserManager"
 
 const DEFAULT_AVATAR = "https://bulma.io/assets/images/placeholders/128x128.png"
@@ -50,6 +50,11 @@ export const UserProfileDetail = () => {
             </tr>
           </tbody>
         </table>
+        <div className="mt-4">
+          <Link to={`/profiles/${userId}/posts`} className="button is-link">
+            View Posts
+          </Link>
+        </div>
       </div>
     </div>
   )
