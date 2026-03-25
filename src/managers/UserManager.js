@@ -1,74 +1,56 @@
+import { API, authHeader } from "./api"
+
 export const getProfiles = () => {
-  return fetch("http://localhost:8088/profiles", {
-    headers: {
-      "Authorization": `Token ${localStorage.getItem('auth_token')}`,
-      "Accept": "application/json"
-    }
+  return fetch(`${API}/profiles`, {
+    headers: authHeader()
   }).then(res => res.json())
 }
 
 export const getProfile = (id) => {
-  return fetch(`http://localhost:8088/profiles/${id}`, {
-    headers: {
-      "Authorization": `Token ${localStorage.getItem('auth_token')}`,
-      "Accept": "application/json"
-    }
+  return fetch(`${API}/profiles/${id}`, {
+    headers: authHeader()
   }).then(res => res.json())
 }
 
 export const deactivateUser = (id) => {
-  return fetch(`http://localhost:8088/profiles/${id}/deactivate`, {
+  return fetch(`${API}/profiles/${id}/deactivate`, {
     method: "PUT",
-    headers: {
-      "Authorization": `Token ${localStorage.getItem('auth_token')}`
-    }
+    headers: authHeader()
   })
 }
 
 export const reactivateUser = (id) => {
-  return fetch(`http://localhost:8088/profiles/${id}/reactivate`, {
+  return fetch(`${API}/profiles/${id}/reactivate`, {
     method: "PUT",
-    headers: {
-      "Authorization": `Token ${localStorage.getItem('auth_token')}`
-    }
+    headers: authHeader()
   })
 }
 
 export const changeUserType = (id, userType) => {
-  return fetch(`http://localhost:8088/profiles/${id}/type`, {
+  return fetch(`${API}/profiles/${id}/type`, {
     method: "PUT",
-    headers: {
-      "Authorization": `Token ${localStorage.getItem('auth_token')}`,
-      "Content-Type": "application/json"
-    },
+    headers: { ...authHeader(), "Content-Type": "application/json" },
     body: JSON.stringify({ user_type: userType })
   })
 }
 
 export const getDemotionQueue = () => {
-  return fetch("http://localhost:8088/demotionqueue", {
-    headers: {
-      "Authorization": `Token ${localStorage.getItem('auth_token')}`,
-      "Accept": "application/json"
-    }
+  return fetch(`${API}/demotionqueue`, {
+    headers: authHeader()
   }).then(res => res.json())
 }
 
 export const cancelDemotionQueueItem = (id) => {
-  return fetch(`http://localhost:8088/demotionqueue/${id}`, {
+  return fetch(`${API}/demotionqueue/${id}`, {
     method: "DELETE",
-    headers: {
-      "Authorization": `Token ${localStorage.getItem('auth_token')}`
-    }
+    headers: authHeader()
   })
 }
 
 export const uploadProfileImage = (id, formData) => {
-  return fetch(`http://localhost:8088/profiles/${id}/image`, {
+  return fetch(`${API}/profiles/${id}/image`, {
     method: "PUT",
-    headers: {
-      "Authorization": `Token ${localStorage.getItem('auth_token')}`
-    },
+    headers: authHeader(),
     body: formData
   }).then(res => res.json())
 }

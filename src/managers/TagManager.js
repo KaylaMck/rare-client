@@ -1,50 +1,36 @@
+import { API, authHeader } from "./api"
+
 export const getTags = () => {
-  return fetch("http://localhost:8088/tags", {
-    headers: {
-      "Authorization": `Token ${localStorage.getItem("auth_token")}`,
-      "Accept": "application/json"
-    }
+  return fetch(`${API}/tags`, {
+    headers: authHeader()
   }).then(res => res.json())
 }
 
 export const getTag = (id) => {
-  return fetch(`http://localhost:8088/tags/${id}`, {
-    headers: {
-      "Authorization": `Token ${localStorage.getItem("auth_token")}`,
-      "Accept": "application/json"
-    }
+  return fetch(`${API}/tags/${id}`, {
+    headers: authHeader()
   }).then(res => res.json())
 }
 
 export const createTag = (label) => {
-  return fetch("http://localhost:8088/tags", {
+  return fetch(`${API}/tags`, {
     method: "POST",
-    headers: {
-      "Authorization": `Token ${localStorage.getItem("auth_token")}`,
-      "Content-Type": "application/json",
-      "Accept": "application/json"
-    },
+    headers: { ...authHeader(), "Content-Type": "application/json" },
     body: JSON.stringify({ label })
   }).then(res => res.json())
 }
 
 export const updateTag = (id, label) => {
-  return fetch(`http://localhost:8088/tags/${id}`, {
+  return fetch(`${API}/tags/${id}`, {
     method: "PUT",
-    headers: {
-      "Authorization": `Token ${localStorage.getItem("auth_token")}`,
-      "Content-Type": "application/json",
-      "Accept": "application/json"
-    },
+    headers: { ...authHeader(), "Content-Type": "application/json" },
     body: JSON.stringify({ label })
   }).then(res => res.json())
 }
 
 export const deleteTag = (id) => {
-  return fetch(`http://localhost:8088/tags/${id}`, {
+  return fetch(`${API}/tags/${id}`, {
     method: "DELETE",
-    headers: {
-      "Authorization": `Token ${localStorage.getItem("auth_token")}`
-    }
+    headers: authHeader()
   })
 }
