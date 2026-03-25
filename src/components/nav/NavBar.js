@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import "./NavBar.css"
 import Logo from "./rare.jpeg"
@@ -8,6 +8,7 @@ export const NavBar = ({ token, setToken, isAdmin }) => {
   const navbar = useRef()
   const hamburger = useRef()
   const [searchQuery, setSearchQuery] = useState("")
+  const [adminDropdownOpen, setAdminDropdownOpen] = useState(false)
 
   const handleSearch = (e) => {
     e.preventDefault()
@@ -16,6 +17,12 @@ export const NavBar = ({ token, setToken, isAdmin }) => {
       setSearchQuery("")
     }
   }
+
+  useEffect(() => {
+    const close = () => setAdminDropdownOpen(false)
+    document.addEventListener('click', close)
+    return () => document.removeEventListener('click', close)
+  }, [])
 
   const showMobileNavbar = () => {
     hamburger.current.classList.toggle('is-active')
@@ -46,12 +53,24 @@ export const NavBar = ({ token, setToken, isAdmin }) => {
                 <Link to="/posts" className="navbar-item">Posts</Link>
                 <Link to="/posts/new" className="navbar-item">New Post</Link>
                 <Link to="/myposts" className="navbar-item">My Posts</Link>
-                {isAdmin && <Link to="/tags" className="navbar-item">Tag Management</Link>}
-                {isAdmin && <Link to="/categories" className="navbar-item">Category Management</Link>}
-                {isAdmin && <Link to="/profiles" className="navbar-item">User Profiles</Link>}
-                {isAdmin && <Link to="/unapprovedposts" className="navbar-item">Approve Posts</Link>}
-                {isAdmin && <Link to="/approvedposts" className="navbar-item">Unapprove Posts</Link>}
-                {isAdmin && <Link to="/demotionqueue" className="navbar-item">Pending Actions</Link>}
+                {isAdmin && (
+                  <div className={`navbar-item has-dropdown${adminDropdownOpen ? ' is-active' : ''}`}>
+                    <a className="navbar-link" onClick={(e) => { e.stopPropagation(); setAdminDropdownOpen(o => !o) }}>
+                      Admin
+                    </a>
+                    <div className="navbar-dropdown">
+                      <Link to="/tags" className="navbar-item" onClick={() => setAdminDropdownOpen(false)}>Tag Management</Link>
+                      <Link to="/categories" className="navbar-item" onClick={() => setAdminDropdownOpen(false)}>Category Management</Link>
+                      <Link to="/profiles" className="navbar-item" onClick={() => setAdminDropdownOpen(false)}>User Profiles</Link>
+                      <hr className="navbar-divider" />
+                      <Link to="/unapprovedposts" className="navbar-item" onClick={() => setAdminDropdownOpen(false)}>Approve Posts</Link>
+                      <Link to="/approvedposts" className="navbar-item" onClick={() => setAdminDropdownOpen(false)}>Unapprove Posts</Link>
+                      <Link to="/demotionqueue" className="navbar-item" onClick={() => setAdminDropdownOpen(false)}>Pending Actions</Link>
+                      <hr className="navbar-divider" />
+                      <Link to="/reactions/new" className="navbar-item" onClick={() => setAdminDropdownOpen(false)}>Add Reaction</Link>
+                    </div>
+                  </div>
+                )}
               </>
               :
               ""

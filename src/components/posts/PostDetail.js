@@ -74,7 +74,10 @@ export const PostDetail = () => {
               onClick={() => handleReactionClick(reaction)}
               title={reaction.label}
             >
-              <img src={reaction.image_url} alt={reaction.label} style={{ width: '1.5rem', height: '1.5rem', marginRight: '0.4rem' }} />
+              {reaction.image_url?.startsWith('http')
+                ? <img src={reaction.image_url} alt={reaction.label} style={{ width: '1.5rem', height: '1.5rem', marginRight: '0.4rem' }} />
+                : <span style={{ fontSize: '1.5rem', marginRight: '0.4rem' }}>{reaction.image_url}</span>
+              }
               <span>{reaction.count}</span>
             </button>
           ))}

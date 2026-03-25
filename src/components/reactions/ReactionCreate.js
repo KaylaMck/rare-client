@@ -10,7 +10,7 @@ export const ReactionCreate = () => {
   const handleSave = (e) => {
     e.preventDefault()
     createReaction({ label: labelRef.current.value, image_url: imageUrlRef.current.value })
-      .then(() => navigate("/reactions"))
+      .then(() => navigate("/posts"))
   }
 
   return (
@@ -24,14 +24,14 @@ export const ReactionCreate = () => {
           </div>
         </div>
         <div className="field">
-          <label className="label">Image URL</label>
+          <label className="label">Emoji</label>
           <div className="control">
-            <input className="input" type="text" ref={imageUrlRef} required />
+            <input className="input" type="text" ref={imageUrlRef} placeholder="e.g. 😊" required />
           </div>
         </div>
         <div className="buttons">
           <button className="button is-primary" type="submit">Save</button>
-          <button className="button" type="button" onClick={() => navigate("/reactions")}>Cancel</button>
+          <button className="button" type="button" onClick={() => navigate("/posts")}>Cancel</button>
         </div>
       </form>
     </section>
