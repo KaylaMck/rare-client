@@ -24,6 +24,7 @@ import { UserTypeForm } from "../components/users/UserTypeForm"
 import { Home } from "../components/home/Home"
 import { UnapprovedPostList } from "../components/posts/UnapprovedPostList"
 import { ApprovedPostList } from "../components/posts/ApprovedPostList"
+import { DemotionQueueList } from "../components/users/DemotionQueueList"
 
 export const ApplicationViews = ({ token, setToken, isAdmin }) => {
   return <>
@@ -53,6 +54,7 @@ export const ApplicationViews = ({ token, setToken, isAdmin }) => {
           <Route path="/profiles/:userId/edit-type" element={<UserTypeForm />} />
           <Route path="/unapprovedposts" element={<UnapprovedPostList />} />
           <Route path="/approvedposts" element={<ApprovedPostList />} />
+          <Route path="/demotionqueue" element={<DemotionQueueList />} />
         </Route>
       </Route>
     </Routes>

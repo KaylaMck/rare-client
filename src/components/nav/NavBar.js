@@ -42,6 +42,7 @@ export const NavBar = ({ token, setToken, isAdmin }) => {
                 {isAdmin && <Link to="/profiles" className="navbar-item">User Profiles</Link>}
                 {isAdmin && <Link to="/unapprovedposts" className="navbar-item">Approve Posts</Link>}
                 {isAdmin && <Link to="/approvedposts" className="navbar-item">Unapprove Posts</Link>}
+                {isAdmin && <Link to="/demotionqueue" className="navbar-item">Pending Actions</Link>}
               </>
               :
               ""

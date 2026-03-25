@@ -7,6 +7,7 @@ export const UserTypeForm = () => {
   const userTypeRef = useRef()
   const navigate = useNavigate()
   const [error, setError] = useState(null)
+  const [info, setInfo] = useState(null)
 
   useEffect(() => {
     getProfile(userId).then(profile => {
@@ -17,7 +18,9 @@ export const UserTypeForm = () => {
   const handleSave = (e) => {
     e.preventDefault()
     changeUserType(userId, userTypeRef.current.value).then(res => {
-      if (res.ok) {
+      if (res.status === 202) {
+        res.json().then(data => setInfo(data.message))
+      } else if (res.ok) {
         navigate("/profiles")
       } else {
         res.json().then(data => setError(data.error))
@@ -31,6 +34,12 @@ export const UserTypeForm = () => {
       {error && (
         <div className="notification is-danger">
           {error}
+        </div>
+      )}
+      {info && (
+        <div className="notification is-info">
+          {info}{" "}
+          <button className="button is-small is-light ml-2" onClick={() => navigate('/demotionqueue')}>View Pending Actions</button>
         </div>
       )}
       <form onSubmit={handleSave}>

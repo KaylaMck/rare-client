@@ -44,3 +44,21 @@ export const changeUserType = (id, userType) => {
     body: JSON.stringify({ user_type: userType })
   })
 }
+
+export const getDemotionQueue = () => {
+  return fetch("http://localhost:8088/demotionqueue", {
+    headers: {
+      "Authorization": `Token ${localStorage.getItem('auth_token')}`,
+      "Accept": "application/json"
+    }
+  }).then(res => res.json())
+}
+
+export const cancelDemotionQueueItem = (id) => {
+  return fetch(`http://localhost:8088/demotionqueue/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Authorization": `Token ${localStorage.getItem('auth_token')}`
+    }
+  })
+}
