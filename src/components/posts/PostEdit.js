@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
-import { getPost, updatePost } from "../../managers/PostManager"
+import { getPost, updatePost, uploadPostImage } from "../../managers/PostManager"
 import { getCategories } from "../../managers/CategoryManager"
 
 export const PostEdit = () => {
@@ -9,7 +9,7 @@ export const PostEdit = () => {
   const [categories, setCategories] = useState([])
   const titleRef = useRef()
   const categoryRef = useRef()
-  const imageUrlRef = useRef()
+  const fileRef = useRef()
   const contentRef = useRef()
   const navigate = useNavigate()
 
@@ -23,9 +23,18 @@ export const PostEdit = () => {
     updatePost(postId, {
       title: titleRef.current.value,
       category_id: parseInt(categoryRef.current.value),
-      image_url: imageUrlRef.current.value,
+      image_url: post.image_url,
       content: contentRef.current.value,
-    }).then(() => navigate(`/posts/${postId}`))
+    }).then(() => {
+      const file = fileRef.current.files[0]
+      if (file) {
+        const formData = new FormData()
+        formData.append("image", file)
+        uploadPostImage(postId, formData).then(() => navigate(`/posts/${postId}`))
+      } else {
+        navigate(`/posts/${postId}`)
+      }
+    })
   }
 
   if (!post) return <p className="p-4">Loading...</p>
@@ -54,10 +63,16 @@ export const PostEdit = () => {
           </div>
         </div>
         <div className="field">
-          <label className="label">Header Image URL (optional)</label>
+          <label className="label">Header Image</label>
+          {post.image_url && (
+            <figure className="image mb-2" style={{ maxWidth: 300 }}>
+              <img src={post.image_url} alt="Current header" />
+            </figure>
+          )}
           <div className="control">
-            <input className="input" type="url" ref={imageUrlRef} defaultValue={post.image_url ?? ""} />
+            <input className="input" type="file" accept="image/*" ref={fileRef} />
           </div>
+          <p className="help">Upload a new image to replace the current one.</p>
         </div>
         <div className="field">
           <label className="label">Content</label>

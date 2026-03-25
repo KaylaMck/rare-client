@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { createPost } from "../../managers/PostManager"
+import { createPost, uploadPostImage } from "../../managers/PostManager"
 import { getCategories } from "../../managers/CategoryManager"
 
 export const PostCreate = () => {
   const [categories, setCategories] = useState([])
   const titleRef = useRef()
   const categoryRef = useRef()
-  const imageUrlRef = useRef()
+  const fileRef = useRef()
   const contentRef = useRef()
   const navigate = useNavigate()
 
@@ -20,9 +20,17 @@ export const PostCreate = () => {
     createPost({
       title: titleRef.current.value,
       category_id: parseInt(categoryRef.current.value),
-      image_url: imageUrlRef.current.value,
       content: contentRef.current.value,
-    }).then(post => navigate(`/posts/${post.id}`))
+    }).then(post => {
+      const file = fileRef.current.files[0]
+      if (file) {
+        const formData = new FormData()
+        formData.append("image", file)
+        uploadPostImage(post.id, formData).then(() => navigate(`/posts/${post.id}`))
+      } else {
+        navigate(`/posts/${post.id}`)
+      }
+    })
   }
 
   return (
@@ -49,9 +57,9 @@ export const PostCreate = () => {
           </div>
         </div>
         <div className="field">
-          <label className="label">Header Image URL (optional)</label>
+          <label className="label">Header Image (optional)</label>
           <div className="control">
-            <input className="input" type="url" ref={imageUrlRef} />
+            <input className="input" type="file" accept="image/*" ref={fileRef} />
           </div>
         </div>
         <div className="field">

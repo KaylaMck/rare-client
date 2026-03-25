@@ -108,6 +108,14 @@ export const searchPosts = (query) => {
   }).then(res => res.json())
 }
 
+export const uploadPostImage = (postId, formData) => {
+  return fetch(`${API}/posts/${postId}/image`, {
+    method: "PUT",
+    headers: authHeader(),
+    body: formData
+  }).then(res => res.json())
+}
+
 export const updatePostTags = (postId, tagIds) => {
   return fetch(`${API}/posts/${postId}/tags`, {
     method: "PUT",
