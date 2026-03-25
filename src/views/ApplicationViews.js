@@ -21,6 +21,7 @@ import { UserProfileDetail } from "../components/users/UserProfileDetail"
 import { UserPostList } from "../components/users/UserPostList"
 import { UserTypeForm } from "../components/users/UserTypeForm"
 import { Home } from "../components/home/Home"
+import { UnapprovedPostList } from "../components/posts/UnapprovedPostList"
 
 export const ApplicationViews = ({ token, setToken }) => {
   return <>
@@ -47,6 +48,7 @@ export const ApplicationViews = ({ token, setToken }) => {
         <Route path="/profiles/:userId" element={<UserProfileDetail />} />
         <Route path="/profiles/:userId/posts" element={<UserPostList />} />
         <Route path="/profiles/:userId/edit-type" element={<UserTypeForm />} />
+        <Route path="/unapprovedposts" element={<UnapprovedPostList />} />
       </Route>
     </Routes>
   </>
