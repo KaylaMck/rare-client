@@ -16,6 +16,6 @@ export const Rare = () => {
 
   return <>
     <NavBar token={token} setToken={setToken} isAdmin={isAdmin} />
-    <ApplicationViews token={token} setToken={setToken} />
+    <ApplicationViews token={token} setToken={setToken} isAdmin={isAdmin} />
   </>
 }
