@@ -58,23 +58,33 @@ export const UserProfileList = () => {
               <td>{profile.username}</td>
               <td>{profile.user_type}</td>
               <td>
-                {showDeactivated ? (
-                  <button
-                    className="button is-success is-small"
-                    onClick={(e) => handleReactivate(e, profile)}
-                  >
-                    Reactivate
-                  </button>
-                ) : (
-                  profile.user_type !== "Admin" && (
+                <div className="buttons are-small">
+                  {!showDeactivated && (
                     <button
-                      className="button is-danger is-small"
-                      onClick={(e) => handleDeactivate(e, profile)}
+                      className="button is-info"
+                      onClick={(e) => { e.stopPropagation(); navigate(`/profiles/${profile.id}/edit-type`) }}
                     >
-                      Deactivate
+                      Edit
                     </button>
-                  )
-                )}
+                  )}
+                  {showDeactivated ? (
+                    <button
+                      className="button is-success"
+                      onClick={(e) => handleReactivate(e, profile)}
+                    >
+                      Reactivate
+                    </button>
+                  ) : (
+                    profile.user_type !== "Admin" && (
+                      <button
+                        className="button is-danger"
+                        onClick={(e) => handleDeactivate(e, profile)}
+                      >
+                        Deactivate
+                      </button>
+                    )
+                  )}
+                </div>
               </td>
             </tr>
           ))}

@@ -33,3 +33,14 @@ export const reactivateUser = (id) => {
     }
   })
 }
+
+export const changeUserType = (id, userType) => {
+  return fetch(`http://localhost:8088/profiles/${id}/type`, {
+    method: "PUT",
+    headers: {
+      "Authorization": `Token ${localStorage.getItem('auth_token')}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ user_type: userType })
+  })
+}

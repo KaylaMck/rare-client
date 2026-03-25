@@ -19,6 +19,7 @@ import { CommentCreate } from "../components/comments/CommentCreate"
 import { UserProfileList } from "../components/users/UserProfileList"
 import { UserProfileDetail } from "../components/users/UserProfileDetail"
 import { UserPostList } from "../components/users/UserPostList"
+import { UserTypeForm } from "../components/users/UserTypeForm"
 import { Home } from "../components/home/Home"
 
 export const ApplicationViews = ({ token, setToken }) => {
@@ -45,6 +46,7 @@ export const ApplicationViews = ({ token, setToken }) => {
         <Route path="/profiles" element={<UserProfileList />} />
         <Route path="/profiles/:userId" element={<UserProfileDetail />} />
         <Route path="/profiles/:userId/posts" element={<UserPostList />} />
+        <Route path="/profiles/:userId/edit-type" element={<UserTypeForm />} />
       </Route>
     </Routes>
   </>
