@@ -102,6 +102,12 @@ export const getApprovedPosts = () => {
   }).then(res => res.json())
 }
 
+export const searchPosts = (query) => {
+  return fetch(`${API}/posts/search?q=${encodeURIComponent(query)}`, {
+    headers: authHeader()
+  }).then(res => res.json())
+}
+
 export const updatePostTags = (postId, tagIds) => {
   return fetch(`${API}/posts/${postId}/tags`, {
     method: "PUT",

@@ -26,6 +26,7 @@ import { UserTypeForm } from "../components/users/UserTypeForm"
 import { Home } from "../components/home/Home"
 import { UnapprovedPostList } from "../components/posts/UnapprovedPostList"
 import { ApprovedPostList } from "../components/posts/ApprovedPostList"
+import { PostSearch } from "../components/posts/PostSearch"
 import { DemotionQueueList } from "../components/users/DemotionQueueList"
 
 export const ApplicationViews = ({ token, setToken, isAdmin }) => {
@@ -36,6 +37,7 @@ export const ApplicationViews = ({ token, setToken, isAdmin }) => {
       <Route element={<Authorized token={token} />}>
         <Route path="/" element={<Home />} />
         <Route path="/posts" element={<PostList />} />
+        <Route path="/posts/search" element={<PostSearch />} />
         <Route path="/posts/new" element={<PostCreate />} />
         <Route path="/tags" element={<TagList />} />
         <Route path="/posts/:postId" element={<PostDetail />} />

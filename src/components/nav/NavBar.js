@@ -1,4 +1,4 @@
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import "./NavBar.css"
 import Logo from "./rare.jpeg"
@@ -7,6 +7,15 @@ export const NavBar = ({ token, setToken, isAdmin }) => {
   const navigate = useNavigate()
   const navbar = useRef()
   const hamburger = useRef()
+  const [searchQuery, setSearchQuery] = useState("")
+
+  const handleSearch = (e) => {
+    e.preventDefault()
+    if (searchQuery.trim()) {
+      navigate(`/posts/search?q=${encodeURIComponent(searchQuery.trim())}`)
+      setSearchQuery("")
+    }
+  }
 
   const showMobileNavbar = () => {
     hamburger.current.classList.toggle('is-active')
@@ -50,6 +59,20 @@ export const NavBar = ({ token, setToken, isAdmin }) => {
         </div>
 
         <div className="navbar-end">
+          {token && (
+            <div className="navbar-item">
+              <form onSubmit={handleSearch} className="is-flex">
+                <input
+                  className="input"
+                  type="text"
+                  placeholder="Search posts..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+                <button type="submit" className="button is-outlined ml-1">Search</button>
+              </form>
+            </div>
+          )}
           <div className="navbar-item">
             <div className="buttons">
               {
