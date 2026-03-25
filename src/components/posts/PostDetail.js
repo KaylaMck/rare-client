@@ -2,21 +2,34 @@ import { useEffect, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { getPost, deletePost } from "../../managers/PostManager"
 import { getPostComments, deleteComment } from "../../managers/CommentManager"
+import { getPostReactions, addPostReaction, removePostReaction } from "../../managers/ReactionManager"
 
 export const PostDetail = () => {
   const { postId } = useParams()
   const [post, setPost] = useState(null)
   const [comments, setComments] = useState([])
+  const [reactions, setReactions] = useState([])
   const [confirmDelete, setConfirmDelete] = useState(false)
   const [confirmDeleteCommentId, setConfirmDeleteCommentId] = useState(null)
   const navigate = useNavigate()
 
   const currentUserId = parseInt(localStorage.getItem("auth_token"))
 
+  const loadReactions = () => getPostReactions(postId).then(setReactions)
+
   useEffect(() => {
     getPost(postId).then(setPost)
     getPostComments(postId).then(setComments)
+    loadReactions()
   }, [postId])
+
+  const handleReactionClick = (reaction) => {
+    if (reaction.user_reacted) {
+      removePostReaction(postId, reaction.id).then(loadReactions)
+    } else {
+      addPostReaction(postId, reaction.id).then(loadReactions)
+    }
+  }
 
   if (!post) return <p className="p-4">Loading...</p>
 
@@ -51,6 +64,20 @@ export const PostDetail = () => {
               ))
             : <span className="has-text-grey">No tags</span>
           }
+        </div>
+
+        <div className="is-flex is-flex-wrap-wrap mb-4" style={{ gap: '1rem' }}>
+          {reactions.map(reaction => (
+            <button
+              key={reaction.id}
+              className={`button${reaction.user_reacted ? ' is-primary' : ''}`}
+              onClick={() => handleReactionClick(reaction)}
+              title={reaction.label}
+            >
+              <img src={reaction.image_url} alt={reaction.label} style={{ width: '1.5rem', height: '1.5rem', marginRight: '0.4rem' }} />
+              <span>{reaction.count}</span>
+            </button>
+          ))}
         </div>
 
         {isAuthor && (
