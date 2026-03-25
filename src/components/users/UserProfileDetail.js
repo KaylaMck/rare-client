@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Link, useParams } from "react-router-dom"
-import { getProfile } from "../../managers/UserManager"
+import { getProfile, uploadProfileImage } from "../../managers/UserManager"
 import { subscribeToUser, unsubscribeFromUser } from "../../managers/SubscriptionManager"
 
 const DEFAULT_AVATAR = "https://bulma.io/assets/images/placeholders/128x128.png"
@@ -9,6 +9,19 @@ export const UserProfileDetail = () => {
   const { userId } = useParams()
   const [profile, setProfile] = useState(null)
   const currentUserId = localStorage.getItem("auth_token")
+  const fileInputRef = useRef(null)
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0]
+    if (!file) return
+    const formData = new FormData()
+    formData.append("image", file)
+    uploadProfileImage(userId, formData).then(data => {
+      if (data.profile_image_url) {
+        setProfile({ ...profile, profile_image_url: data.profile_image_url })
+      }
+    })
+  }
 
   useEffect(() => {
     getProfile(userId).then(data => setProfile(data))
@@ -27,6 +40,25 @@ export const UserProfileDetail = () => {
               alt={profile.username}
             />
           </figure>
+          {String(userId) === String(currentUserId) && (
+            <>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                style={{ display: "none" }}
+                onChange={handleImageChange}
+              />
+              <div className="mt-2">
+                <button
+                  className="button is-small is-light"
+                  onClick={() => fileInputRef.current.click()}
+                >
+                  Change Photo
+                </button>
+              </div>
+            </>
+          )}
         </div>
         <table className="table is-fullwidth">
           <tbody>

@@ -62,3 +62,13 @@ export const cancelDemotionQueueItem = (id) => {
     }
   })
 }
+
+export const uploadProfileImage = (id, formData) => {
+  return fetch(`http://localhost:8088/profiles/${id}/image`, {
+    method: "PUT",
+    headers: {
+      "Authorization": `Token ${localStorage.getItem('auth_token')}`
+    },
+    body: formData
+  }).then(res => res.json())
+}
