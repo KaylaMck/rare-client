@@ -28,6 +28,7 @@ import { UnapprovedPostList } from "../components/posts/UnapprovedPostList"
 import { ApprovedPostList } from "../components/posts/ApprovedPostList"
 import { PostSearch } from "../components/posts/PostSearch"
 import { DemotionQueueList } from "../components/users/DemotionQueueList"
+import { ReactionCreate } from "../components/reactions/ReactionCreate"
 
 export const ApplicationViews = ({ token, setToken, isAdmin }) => {
   return <>
@@ -61,6 +62,7 @@ export const ApplicationViews = ({ token, setToken, isAdmin }) => {
           <Route path="/unapprovedposts" element={<UnapprovedPostList />} />
           <Route path="/approvedposts" element={<ApprovedPostList />} />
           <Route path="/demotionqueue" element={<DemotionQueueList />} />
+          <Route path="/reactions/new" element={<ReactionCreate />} />
         </Route>
       </Route>
     </Routes>
