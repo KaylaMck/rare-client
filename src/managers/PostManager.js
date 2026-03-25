@@ -77,6 +77,19 @@ export const approvePost = (postId) => {
   }).then(res => res.json())
 }
 
+export const unapprovePost = (postId) => {
+  return fetch(`${API}/posts/${postId}/unapprove`, {
+    method: "PUT",
+    headers: authHeader()
+  }).then(res => res.json())
+}
+
+export const getApprovedPosts = () => {
+  return fetch(`${API}/approvedposts`, {
+    headers: authHeader()
+  }).then(res => res.json())
+}
+
 export const updatePostTags = (postId, tagIds) => {
   return fetch(`${API}/posts/${postId}/tags`, {
     method: "PUT",
