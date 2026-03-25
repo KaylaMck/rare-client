@@ -10,6 +10,7 @@ import { PostDetail } from "../components/posts/PostDetail"
 import { ManagePostTags } from "../components/posts/ManagePostTags"
 import { PostList } from "../components/posts/PostList"
 import { PostsByCategory } from "../components/posts/PostsByCategory"
+import { PostsByTag } from "../components/posts/PostsByTag"
 import { PostCreate } from "../components/posts/PostCreate"
 import { MyPostList } from "../components/posts/MyPostList"
 import { PostEdit } from "../components/posts/PostEdit"
@@ -43,6 +44,7 @@ export const ApplicationViews = ({ token, setToken, isAdmin }) => {
         <Route path="/myposts" element={<MyPostList />} />
         <Route path="/categories" element={<CategoryList />} />
         <Route path="/categories/:categoryId/posts" element={<PostsByCategory />} />
+        <Route path="/tags/:tagId/posts" element={<PostsByTag />} />
         <Route path="/posts/:postId/comments/new" element={<CommentCreate />} />
         <Route path="/comments/:commentId/edit" element={<CommentEdit />} />
         <Route path="/profiles/:userId" element={<UserProfileDetail />} />

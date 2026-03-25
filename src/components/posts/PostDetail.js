@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import { getPost, deletePost } from "../../managers/PostManager"
 import { getPostComments, deleteComment } from "../../managers/CommentManager"
 
@@ -47,7 +47,7 @@ export const PostDetail = () => {
         <div className="tags mb-4">
           {post.tags.length > 0
             ? post.tags.map(tag => (
-                <span key={tag.id} className="tag is-info">{tag.label}</span>
+                <Link key={tag.id} to={`/tags/${tag.id}/posts`} className="tag is-info">{tag.label}</Link>
               ))
             : <span className="has-text-grey">No tags</span>
           }

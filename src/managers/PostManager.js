@@ -64,6 +64,12 @@ export const getPostsByCategory = (categoryId) => {
   }).then(res => res.json())
 }
 
+export const getPostsByTag = (tagId) => {
+  return fetch(`${API}/tags/${tagId}/posts`, {
+    headers: authHeader()
+  }).then(res => res.json())
+}
+
 export const getPostsByUser = (userId) => {
   return fetch(`${API}/profiles/${userId}/posts`, {
     headers: authHeader()
