@@ -58,6 +58,12 @@ export const deletePost = (postId) => {
   })
 }
 
+export const getPostsByCategory = (categoryId) => {
+  return fetch(`${API}/categories/${categoryId}/posts`, {
+    headers: authHeader()
+  }).then(res => res.json())
+}
+
 export const getPostsByUser = (userId) => {
   return fetch(`${API}/profiles/${userId}/posts`, {
     headers: authHeader()

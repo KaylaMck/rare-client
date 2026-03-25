@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { getCategories, deleteCategory } from "../../managers/CategoryManager"
 
 export const CategoryList = () => {
@@ -31,7 +31,7 @@ export const CategoryList = () => {
       <ul>
         {categories.map(category => (
           <li key={category.id}>
-            {category.label}
+            <Link to={`/categories/${category.id}/posts`}>{category.label}</Link>
             <button
               className="button is-small is-warning ml-3"
               onClick={() => navigate(`/categories/${category.id}/edit`)}
