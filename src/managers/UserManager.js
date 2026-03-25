@@ -24,3 +24,12 @@ export const deactivateUser = (id) => {
     }
   })
 }
+
+export const reactivateUser = (id) => {
+  return fetch(`http://localhost:8088/profiles/${id}/reactivate`, {
+    method: "PUT",
+    headers: {
+      "Authorization": `Token ${localStorage.getItem('auth_token')}`
+    }
+  })
+}

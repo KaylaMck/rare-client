@@ -1,41 +1,54 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { getProfiles } from "../../managers/UserManager"
-import { deactivateUser } from "../../managers/UserManager"
+import { getProfiles, deactivateUser, reactivateUser } from "../../managers/UserManager"
 
 export const UserProfileList = () => {
   const [profiles, setProfiles] = useState([])
+  const [showDeactivated, setShowDeactivated] = useState(false)
   const navigate = useNavigate()
 
+  const loadProfiles = () => getProfiles().then(data => setProfiles(data))
+
   useEffect(() => {
-    getProfiles().then(data => setProfiles(data))
+    loadProfiles()
   }, [])
 
   const handleDeactivate = (e, profile) => {
     e.stopPropagation()
     if (window.confirm(`Deactivate ${profile.username}? They will no longer be able to log in.`)) {
-      deactivateUser(profile.id).then(() => {
-        navigate("/profiles")
-        getProfiles().then(data => setProfiles(data))
-      })
+      deactivateUser(profile.id).then(() => loadProfiles())
     }
   }
 
+  const handleReactivate = (e, profile) => {
+    e.stopPropagation()
+    reactivateUser(profile.id).then(() => loadProfiles())
+  }
+
+  const displayed = profiles.filter(p => showDeactivated ? !p.active : p.active)
+
   return (
     <div className="container">
-      <h1 className="title">User Profiles</h1>
+      <div className="is-flex is-justify-content-space-between is-align-items-center mb-4">
+        <h1 className="title mb-0">User Profiles</h1>
+        <button
+          className="button is-light"
+          onClick={() => setShowDeactivated(!showDeactivated)}
+        >
+          {showDeactivated ? "View Active" : "View Deactivated"}
+        </button>
+      </div>
       <table className="table is-fullwidth is-striped">
         <thead>
           <tr>
             <th>Full Name</th>
             <th>Display Name</th>
             <th>User Type</th>
-            <th>Status</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
-          {profiles.map(profile => (
+          {displayed.map(profile => (
             <tr
               key={profile.id}
               onClick={() => navigate(`/profiles/${profile.id}`)}
@@ -44,15 +57,23 @@ export const UserProfileList = () => {
               <td>{profile.full_name}</td>
               <td>{profile.username}</td>
               <td>{profile.user_type}</td>
-              <td>{profile.active ? "Active" : "Inactive"}</td>
               <td>
-                {profile.active && profile.user_type !== "Admin" && (
+                {showDeactivated ? (
                   <button
-                    className="button is-danger is-small"
-                    onClick={(e) => handleDeactivate(e, profile)}
+                    className="button is-success is-small"
+                    onClick={(e) => handleReactivate(e, profile)}
                   >
-                    Deactivate
+                    Reactivate
                   </button>
+                ) : (
+                  profile.user_type !== "Admin" && (
+                    <button
+                      className="button is-danger is-small"
+                      onClick={(e) => handleDeactivate(e, profile)}
+                    >
+                      Deactivate
+                    </button>
+                  )
                 )}
               </td>
             </tr>
