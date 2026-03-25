@@ -15,3 +15,12 @@ export const getProfile = (id) => {
     }
   }).then(res => res.json())
 }
+
+export const deactivateUser = (id) => {
+  return fetch(`http://localhost:8088/profiles/${id}/deactivate`, {
+    method: "PUT",
+    headers: {
+      "Authorization": `Token ${localStorage.getItem('auth_token')}`
+    }
+  })
+}
