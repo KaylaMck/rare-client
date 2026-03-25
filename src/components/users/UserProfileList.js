@@ -5,6 +5,7 @@ import { getProfiles, deactivateUser, reactivateUser } from "../../managers/User
 export const UserProfileList = () => {
   const [profiles, setProfiles] = useState([])
   const [showDeactivated, setShowDeactivated] = useState(false)
+  const [error, setError] = useState(null)
   const navigate = useNavigate()
 
   const loadProfiles = () => getProfiles().then(data => setProfiles(data))
@@ -16,7 +17,14 @@ export const UserProfileList = () => {
   const handleDeactivate = (e, profile) => {
     e.stopPropagation()
     if (window.confirm(`Deactivate ${profile.username}? They will no longer be able to log in.`)) {
-      deactivateUser(profile.id).then(() => loadProfiles())
+      deactivateUser(profile.id).then(res => {
+        if (res.ok) {
+          setError(null)
+          loadProfiles()
+        } else {
+          res.json().then(data => setError(data.error))
+        }
+      })
     }
   }
 
@@ -29,6 +37,11 @@ export const UserProfileList = () => {
 
   return (
     <div className="container">
+      {error && (
+        <div className="notification is-danger">
+          {error}
+        </div>
+      )}
       <div className="is-flex is-justify-content-space-between is-align-items-center mb-4">
         <h1 className="title mb-0">User Profiles</h1>
         <button
@@ -75,14 +88,12 @@ export const UserProfileList = () => {
                       Reactivate
                     </button>
                   ) : (
-                    profile.user_type !== "Admin" && (
-                      <button
-                        className="button is-danger"
-                        onClick={(e) => handleDeactivate(e, profile)}
-                      >
-                        Deactivate
-                      </button>
-                    )
+                    <button
+                      className="button is-danger"
+                      onClick={(e) => handleDeactivate(e, profile)}
+                    >
+                      Deactivate
+                    </button>
                   )}
                 </div>
               </td>

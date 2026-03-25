@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { getProfile, changeUserType } from "../../managers/UserManager"
 
@@ -6,6 +6,7 @@ export const UserTypeForm = () => {
   const { userId } = useParams()
   const userTypeRef = useRef()
   const navigate = useNavigate()
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     getProfile(userId).then(profile => {
@@ -15,13 +16,23 @@ export const UserTypeForm = () => {
 
   const handleSave = (e) => {
     e.preventDefault()
-    changeUserType(userId, userTypeRef.current.value)
-      .then(() => navigate("/profiles"))
+    changeUserType(userId, userTypeRef.current.value).then(res => {
+      if (res.ok) {
+        navigate("/profiles")
+      } else {
+        res.json().then(data => setError(data.error))
+      }
+    })
   }
 
   return (
     <section className="section">
       <h1 className="title">Edit User Type</h1>
+      {error && (
+        <div className="notification is-danger">
+          {error}
+        </div>
+      )}
       <form onSubmit={handleSave}>
         <div className="field">
           <label className="label">User Type</label>
