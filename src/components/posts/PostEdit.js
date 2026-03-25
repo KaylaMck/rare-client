@@ -37,7 +37,7 @@ export const PostEdit = () => {
     })
   }
 
-  if (!post) return <p className="p-4">Loading...</p>
+  if (!post || categories.length === 0) return <p className="p-4">Loading...</p>
 
   return (
     <section className="section">
