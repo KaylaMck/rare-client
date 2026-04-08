@@ -14,6 +14,7 @@ export const PostDetail = () => {
   const navigate = useNavigate()
 
   const currentUserId = parseInt(localStorage.getItem("auth_token"))
+  const isAdmin = localStorage.getItem("is_admin") === "true"
 
   const loadReactions = () => getPostReactions(postId).then(setReactions)
 
@@ -139,7 +140,7 @@ export const PostDetail = () => {
                 <p className="has-text-weight-bold">{comment.subject}</p>
                 <p>{comment.content}</p>
                 <p className="has-text-grey is-size-7">by {comment.author.username}</p>
-                {comment.author.id === currentUserId && (
+                {(comment.author.id === currentUserId || isAdmin) && (
                   <div className="buttons mt-2">
                     <button
                       className="button is-small is-info"
