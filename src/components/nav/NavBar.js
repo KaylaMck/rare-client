@@ -98,7 +98,7 @@ export const NavBar = ({ token, setToken, isAdmin }) => {
                 token
                   ?
                   <button className="button is-outlined" onClick={() => {
-                    setToken('')
+                    setToken(null)
                     navigate('/login')
                   }}>Logout</button>
                   :

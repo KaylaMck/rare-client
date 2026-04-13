@@ -1,23 +1,23 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { getProfile, changeUserType } from "../../managers/UserManager"
 
 export const UserTypeForm = () => {
   const { userId } = useParams()
-  const userTypeRef = useRef()
   const navigate = useNavigate()
+  const [userType, setUserType] = useState("Author")
   const [error, setError] = useState(null)
   const [info, setInfo] = useState(null)
 
   useEffect(() => {
     getProfile(userId).then(profile => {
-      userTypeRef.current.value = profile.user_type
+      setUserType(profile.user_type)
     })
   }, [userId])
 
   const handleSave = (e) => {
     e.preventDefault()
-    changeUserType(userId, userTypeRef.current.value).then(res => {
+    changeUserType(userId, userType).then(res => {
       if (res.status === 202) {
         res.json().then(data => setInfo(data.message))
       } else if (res.ok) {
@@ -47,7 +47,7 @@ export const UserTypeForm = () => {
           <label className="label">User Type</label>
           <div className="control">
             <div className="select">
-              <select ref={userTypeRef}>
+              <select value={userType} onChange={e => setUserType(e.target.value)}>
                 <option value="Author">Author</option>
                 <option value="Admin">Admin</option>
               </select>

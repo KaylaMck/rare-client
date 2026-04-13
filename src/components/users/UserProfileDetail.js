@@ -8,7 +8,7 @@ const DEFAULT_AVATAR = "https://bulma.io/assets/images/placeholders/128x128.png"
 export const UserProfileDetail = () => {
   const { userId } = useParams()
   const [profile, setProfile] = useState(null)
-  const currentUserId = localStorage.getItem("auth_token")
+  const currentUserId = localStorage.getItem("current_user_id")
   const fileInputRef = useRef(null)
 
   const handleImageChange = (e) => {

@@ -3,8 +3,9 @@ import { Link, useNavigate, useParams } from "react-router-dom"
 import { getPost, deletePost } from "../../managers/PostManager"
 import { getPostComments, deleteComment } from "../../managers/CommentManager"
 import { getPostReactions, addPostReaction, removePostReaction } from "../../managers/ReactionManager"
+import { formatPublicationDate } from "../../utils/dates"
 
-export const PostDetail = () => {
+export const PostDetail = ({ isAdmin }) => {
   const { postId } = useParams()
   const [post, setPost] = useState(null)
   const [comments, setComments] = useState([])
@@ -13,8 +14,7 @@ export const PostDetail = () => {
   const [confirmDeleteCommentId, setConfirmDeleteCommentId] = useState(null)
   const navigate = useNavigate()
 
-  const currentUserId = parseInt(localStorage.getItem("auth_token"))
-  const isAdmin = localStorage.getItem("is_admin") === "true"
+  const currentUserId = parseInt(localStorage.getItem("current_user_id"))
 
   const loadReactions = () => getPostReactions(postId).then(setReactions)
 
@@ -44,7 +44,7 @@ export const PostDetail = () => {
           By {post.user.username}
           {post.category && <> &middot; {post.category.label}</>}
           {post.publication_date && (
-            <> &middot; {new Date(post.publication_date.replace(/-/g, '/')).toLocaleDateString("en-US", { month: '2-digit', day: '2-digit', year: 'numeric' })}</>
+            <> &middot; {formatPublicationDate(post.publication_date)}</>
           )}
         </p>
 

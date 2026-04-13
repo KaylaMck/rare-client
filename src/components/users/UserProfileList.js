@@ -9,7 +9,7 @@ export const UserProfileList = () => {
   const [error, setError] = useState(null)
   const [info, setInfo] = useState(null)
   const navigate = useNavigate()
-  const currentUserId = parseInt(localStorage.getItem('auth_token'))
+  const currentUserId = parseInt(localStorage.getItem('current_user_id'))
 
   const loadData = () => {
     Promise.all([getProfiles(), getDemotionQueue()]).then(([profileData, queueData]) => {
@@ -58,7 +58,7 @@ export const UserProfileList = () => {
     return demotionQueue.filter(item => item.action === `deactivate:${profileId}`)
   }
 
-  const displayed = profiles.filter(p => showDeactivated ? !p.active : p.active)
+  const displayed = profiles.filter(p => showDeactivated ? !p.is_active : p.is_active)
 
   return (
     <div className="container">

@@ -6,7 +6,7 @@ export const DemotionQueueList = () => {
   const [queue, setQueue] = useState([])
   const [error, setError] = useState(null)
   const navigate = useNavigate()
-  const currentUserId = parseInt(localStorage.getItem('auth_token'))
+  const currentUserId = parseInt(localStorage.getItem('current_user_id'))
 
   const loadQueue = () => getDemotionQueue().then(data => setQueue(data))
 

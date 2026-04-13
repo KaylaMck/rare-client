@@ -41,7 +41,7 @@ export const ApplicationViews = ({ token, setToken, isAdmin }) => {
         <Route path="/posts/search" element={<PostSearch />} />
         <Route path="/posts/new" element={<PostCreate />} />
         <Route path="/tags" element={<TagList />} />
-        <Route path="/posts/:postId" element={<PostDetail />} />
+        <Route path="/posts/:postId" element={<PostDetail isAdmin={isAdmin} />} />
         <Route path="/posts/:postId/tags" element={<ManagePostTags />} />
         <Route path="/posts/:postId/edit" element={<PostEdit />} />
         <Route path="/myposts" element={<MyPostList />} />
