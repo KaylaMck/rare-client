@@ -80,7 +80,7 @@ python manage.py runserver
 ```bash
 cd rare-client
 npm install
-npm start
+npm run dev
 ```
 
 The app will open at [http://localhost:3000](http://localhost:3000).  
